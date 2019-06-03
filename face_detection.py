@@ -1,6 +1,11 @@
+# OpenCV
 import cv2
 
-# Load xml file for face recognition
+# TensorFlow and tf.keras
+import tensorflow as tf
+from tensorflow import keras
+
+# Load xml file for face detection
 haar_cascade_face = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
 def _train(training_set_folder='training'):
