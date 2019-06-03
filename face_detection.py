@@ -22,7 +22,7 @@ def _show_image(mat):
             break
 
 
-def _train(training_set_folder='training'):
+def dataset(training_set_folder='training'):
 
     ''' Selects only the face of all the images '''
     images = []
@@ -41,8 +41,7 @@ def _train(training_set_folder='training'):
             img = img[y:y+h, x:x+w]
             images.append(img)
 
-    for img in images:
-        _show_image(img)
+    return images
 
 def show_webcam(mirror=False):
     cam = cv2.VideoCapture(0)
@@ -121,7 +120,10 @@ def show_video(video_path):
     cv2.destroyAllWindows()
 
 def main():
-    _train()
+    ''' Get all faces '''
+    data = dataset()
+    
+
     ''' Face Detection on Video '''
     #show_video('gaben.mp4')
 
