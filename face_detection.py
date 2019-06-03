@@ -78,13 +78,11 @@ def show_video(video_path):
     cv2.destroyAllWindows()
 
 def main():
+    ''' Face Detection on Video '''
     show_video('gaben.mp4')
 
-    '''
-    Start webcam
-
-    show_webcam(mirror=True)
-    '''
+    ''' Face Detection on Webcam '''
+    # show_webcam(mirror=True)
 
 if __name__ == "__main__":
     main()
