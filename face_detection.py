@@ -5,11 +5,44 @@ import cv2
 import tensorflow as tf
 from tensorflow import keras
 
+# Numpy and OS
+import numpy as np
+import os
+
 # Load xml file for face detection
 haar_cascade_face = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
+
+def _show_image(mat):
+    while True:
+        cv2.imshow("mat", mat)
+
+        # Set exit key (esc to quit)
+        if cv2.waitKey(1) == 27:
+            break
+
+
 def _train(training_set_folder='training'):
-    print("Work In Progress")
+
+    ''' Selects only the face of all the images '''
+    images = []
+    for found_path in os.listdir(training_set_folder):
+        img = cv2.imread("training/" + found_path)
+
+        # resize image (300x300)
+        img = cv2.resize(img, (300, 300), interpolation=cv2.INTER_AREA)
+
+        # analyze image (get all faces location in the photo)
+        faces = _get_face_locations(img)
+        print("Found {} face(s) in {} image".format(len(faces), found_path))
+
+        # select part of image
+        for (x, y, w, h) in faces:
+            img = img[y:y+h, x:x+w]
+            images.append(img)
+
+    for img in images:
+        _show_image(img)
 
 def show_webcam(mirror=False):
     cam = cv2.VideoCapture(0)
@@ -35,14 +68,19 @@ def show_webcam(mirror=False):
     cv2.destroyAllWindows()
 
 
-def face_detection(img, scaleFactor=1.1, width=15):
+def _get_face_locations(img, scaleFactor=1.1):
     # Convert to gray scale
     img_grey = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Detect faces
     faces = haar_cascade_face.detectMultiScale(img_grey, scaleFactor=scaleFactor, minNeighbors=5)
 
-    for (x, y, w, h) in faces:
+    return faces
+
+
+def face_detection(img, scaleFactor=1.1, width=15):
+
+    for (x, y, w, h) in _get_face_locations(img, scaleFactor):
         # Draw rects
         cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), width)
 
@@ -83,8 +121,9 @@ def show_video(video_path):
     cv2.destroyAllWindows()
 
 def main():
+    _train()
     ''' Face Detection on Video '''
-    show_video('gaben.mp4')
+    #show_video('gaben.mp4')
 
     ''' Face Detection on Webcam '''
     # show_webcam(mirror=True)
