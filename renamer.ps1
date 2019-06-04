@@ -1,8 +1,8 @@
-$images = Get-ChildItem "training"
+$images = Get-ChildItem "imgs"
 
 $id = 0
 foreach ($image in $images) {
     Write-Host $image
-    Rename-Item -LiteralPath "training/$($image)" -NewName "gaben$($id)"
+    Rename-Item -LiteralPath "imgs/$($image)" -NewName "gaben$($id)"
     $id++
 }
