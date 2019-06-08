@@ -135,10 +135,10 @@ def show_video(video_path, detect_eyes=False):
 def main():
 
     ''' Face Detection on Video '''
-    # show_video('gaben.mp4', detect_eyes=True)
+    show_video('gaben.mp4', detect_eyes=True)
 
     ''' Face Detection on Webcam '''
-    show_webcam(mirror=True, detect_eyes=True, eyesScaleFactor=1.3)
+    # show_webcam(mirror=True, detect_eyes=True, eyesScaleFactor=1.3)
 
     ''' Get all faces in the photos '''
     # data = get_faces_folder()
